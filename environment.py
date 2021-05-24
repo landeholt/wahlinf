@@ -20,7 +20,42 @@ class Environment:
 Environment.Production = Environment(
     "production",
     "https://wahlinfastigheter.se/",
-    [],  # [lambda a: any([street in a.title for street in ["Tegelmästargatan"]])],
+    [
+        lambda a: any(
+            [
+                street in a.title.lower()
+                for street in [
+                    "järnvägsgatan",
+                    "värtavägen",
+                    "vegagatan",
+                    "slipgatan",
+                    "skärmarbrinksgatan",
+                    "sandhamnsgatan",
+                    "s:t göransgatan",
+                    "ringvägen",
+                    "katarina bangata",
+                    "rehngatan",
+                    "döbelnsgatan",
+                    "nybodagatan",
+                    "lilla gatan",
+                    "råsundavägen",
+                    "lidnersgatan",
+                    "love almqvist väg",
+                    "john bergsplan",
+                    "hästholmsvägen",
+                    "hornsgatan",
+                    "heleneborgsgatan",
+                    "forngränd",
+                    "essingestråket",
+                    "drottningholmsvägen",
+                    "thorlidsplan",
+                    "bondesonsgatan",
+                    "bondegatan",
+                    "arbetargatan",
+                ]
+            ]
+        )
+    ],
     FormDetails,
     PROD_API,
 )

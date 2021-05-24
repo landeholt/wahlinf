@@ -1,3 +1,4 @@
+from db import create_db
 from environment import Environment
 from model import Apartment, Refs
 import requests
@@ -38,6 +39,8 @@ def get_apartments(soup: bs):
 class WahlinSession:
     def __init__(self, environment: Environment):
         pprint("Session started..")
+        insert = create_db()
+        self.insert = insert
         self.environment = environment
         self.pushbullet = Pushbullet(environment.pb_api)
         self.apartments = []
@@ -66,12 +69,17 @@ class WahlinSession:
             pprint(f"{self.n_apartments} apartments founds")
             for apt in get_apartments(soup):
                 if self.accept(apt):
-                    self.push(apt)
+                    try:
+                        self.insert(apt)
+                        self.push(apt)
+                    except:
+                        pass
             pprint("Apartments pushed")
 
 
 @app.lib.cron()
 def main(event):
+
     session = WahlinSession(Environment.Production)
     session.find_apartments()
     pprint("Session over")
